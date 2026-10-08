@@ -1,0 +1,160 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Professor Harish-Chandra - Life & Legacy</title>
+    <link rel="stylesheet" href="styles.css">
+</head>
+<body>
+
+    <header>
+        <h1>Professor Harish-Chandra (1923 – 1983)</h1>
+        <p>A Pillar of Modern Mathematics: Master of Representation Theory</p>
+    </header>
+
+    <div class="container">
+        <!-- Biography Section -->
+        <section class="biography">
+            <h2>Biography</h2>
+            <div class="bio-content">
+                <!-- Image Container -->
+                <div class="photo-container">
+                    <img src="https://unsplash.com" alt="Mathematical abstraction representation" class="prof-photo">
+                    <p class="caption">A symbolic representation of mathematical structures</p>
+                </div>
+                <div class="bio-text">
+                    <p><strong>Early Life:</strong> Harish-Chandra was born on October 11, 1923, in Kanpur, Uttar Pradesh, India. He completed his higher education in physics from the University of Allahabad, where he also briefly worked under the legendary scientist Sir C. V. Raman.</p>
+                    <p><strong>Transition from Physics to Math:</strong> For his doctoral studies, he went to the University of Cambridge, where he earned his PhD under the guidance of the iconic physicist <strong>Paul Dirac</strong>. During his time at Cambridge, his interest shifted profoundly from theoretical physics to pure mathematics.</p>
+                    <p><strong>Magnificent Contributions:</strong> He spent the majority of his academic career at the **Institute for Advanced Study (IAS)** in Princeton, USA, where giants like Albert Einstein and Robert Oppenheimer were his contemporaries. He was elected a Fellow of the Royal Society (FRS) in 1973.</p>
+                </div>
+            </div>
+        </section>
+
+        <!-- Research Section -->
+        <section class="research">
+            <h2>Key Research & Contributions</h2>
+            <ul>
+                <li><strong>Representation Theory of Semi-simple Lie Groups:</strong> He constructed a foundational, revolutionary theory for the representations of Lie groups.</li>
+                <li><strong>Harmonic Analysis:</strong> He successfully extended Fourier analysis to high-dimensional, complex algebraic and geometric structures.</li>
+                <li><strong>Harish-Chandra's c-function:</strong> This crucial mathematical formulation plays a vital role in quantum mechanics and advanced algebra.</li>
+            </ul>
+        </section>
+
+        <!-- Interactive Quiz Section -->
+        <section class="quiz-section">
+            <h2>Harish-Chandra Research Quiz</h2>
+            <p>Test your knowledge about his remarkable life and mathematical journey!</p>
+            
+            <div id="quiz-container">
+                <div class="question" id="question-text">Loading question...</div>
+                <div class="options" id="options-container">
+                    <!-- Options will be generated dynamically here -->
+                </div>
+                <button id="next-btn" onclick="nextQuestion()">Next Question</button>
+            </div>
+            
+            <div id="result-container" class="hidden">
+                <h3>Your Results</h3>
+                <p id="score-text"></p>
+                <button onclick="restartQuiz()">Restart Quiz</button>
+            </div>
+        </section>
+    </div>
+
+    <footer>
+        <p>Tribute Project Created for GitHub | © 2026</p>
+    </footer>
+
+    <!-- Quiz Logic Script -->
+    <script>
+        const quizData = [
+            {
+                question: "1. Under which legendary physicist did Harish-Chandra complete his PhD at Cambridge?",
+                options: ["Albert Einstein", "Paul Dirac", "C. V. Raman", "Homi J. Bhabha"],
+                answer: 1
+            },
+            {
+                question: "2. What was Harish-Chandra's primary field of research in mathematics?",
+                options: ["Representation Theory & Harmonic Analysis", "Number Theory", "Topology", "Calculus & Fluid Dynamics"],
+                answer: 0
+            },
+            {
+                question: "3. At which prestigious American institute did he spend most of his career as a professor?",
+                options: ["MIT", "Harvard University", "Institute for Advanced Study (IAS), Princeton", "Stanford University"],
+                answer: 2
+            }
+        ];
+
+        let currentQuestionIndex = 0;
+        let score = 0;
+
+        function loadQuestion() {
+            const currentQuestion = quizData[currentQuestionIndex];
+            document.getElementById("question-text").innerText = currentQuestion.question;
+            
+            const optionsContainer = document.getElementById("options-container");
+            optionsContainer.innerHTML = "";
+
+            currentQuestion.options.forEach((option, index) => {
+                const button = document.createElement("button");
+                button.innerText = option;
+                button.classList.add("option-btn");
+                button.onclick = () => selectOption(index, button);
+                optionsContainer.appendChild(button);
+            });
+
+            document.getElementById("next-btn").style.display = "none";
+        }
+
+        function selectOption(selectedIndex, selectedButton) {
+            const correctAnswer = quizData[currentQuestionIndex].answer;
+            const buttons = document.querySelectorAll(".option-btn");
+
+            buttons.forEach((button, index) => {
+                button.disabled = true;
+                if (index === correctAnswer) {
+                    button.style.backgroundColor = "#4CAF50"; // Correct Answer (Green)
+                    button.style.color = "white";
+                } else if (index === selectedIndex) {
+                    button.style.backgroundColor = "#f44336"; // Wrong Answer (Red)
+                    button.style.color = "white";
+                }
+            });
+
+            if (selectedIndex === correctAnswer) {
+                score++;
+            }
+
+            document.getElementById("next-btn").style.display = "block";
+        }
+
+        function nextQuestion() {
+            currentQuestionIndex++;
+            if (currentQuestionIndex < quizData.length) {
+                loadQuestion();
+            } else {
+                showResults();
+            }
+        }
+
+        function showResults() {
+            document.getElementById("quiz-container").classList.add("hidden");
+            const resultContainer = document.getElementById("result-container");
+            resultContainer.classList.remove("hidden");
+            document.getElementById("score-text").innerText = `You scored ${score} out of ${quizData.length}!`;
+        }
+
+        function restartQuiz() {
+            currentQuestionIndex = 0;
+            score = 0;
+            document.getElementById("quiz-container").classList.remove("hidden");
+            document.getElementById("result-container").classList.add("hidden");
+            loadQuestion();
+        }
+
+        // Initialize the first question
+        loadQuestion();
+    </script>
+</body>
+</html>
